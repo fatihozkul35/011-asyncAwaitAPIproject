@@ -1,7 +1,7 @@
 getCountryInfo("Turkey");
 
-async function getCountryInfo(countryName) {
-  let url = `https://restcountries.com/v3.1/name/${countryName}`;
+async function getCountryInfo() {
+  let url = `https://restcountries.com/v3.1/all`;
   const response = await fetch(url);
   if (!response.ok) {
     //! error handling
@@ -12,8 +12,15 @@ async function getCountryInfo(countryName) {
   displayFlag(data);
 }
 
-function displayFlag(country) {
-  country.forEach((item) => {
+function displayFlag(data) {
+  // cName = document.getElementById("countryName");
+  // cName = document.getElementsByTagName("option");
+
+  // console.log(cName[1].value);
+
+  // console.log(document.getElementsByTagName("select").value);
+
+  data.forEach((item) => {
     const {
       flags: { png: countryFlag },
       name: { common: countryName },
@@ -22,7 +29,15 @@ function displayFlag(country) {
       languages,
       currencies,
     } = item;
+
+    // Creating Options
+
+    // cName.innerHTML = `<option value="${countryName}" selected>${countryName}</option>`;
+
+    // Display flags
+
     const cardOfCountry = document.querySelector(".container");
+
     cardOfCountry.innerHTML = `<div class="card" style="width: 18rem">
         <img
           src=${countryFlag}
@@ -35,17 +50,19 @@ function displayFlag(country) {
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
-            <i class="fas fa-lg fa-landmark"></i> ${capital}
+            <i class="fas fa-lg fa-landmark"></i> ${capital ?? ""}
           </li>
           <li class="list-group-item">
-            <i class="fas fa-lg fa-comments"></i> ${Object.values(languages)}
-          </li>
+            <i class="fas fa-lg fa-comments"></i> ${Object.values(
+              languages ?? ``
+            )}    </li>
           <li class="list-group-item">
-            <i class="fas fa-lg fa-money-bill-wave"></i> ${Object.values(
-              Object.values(currencies)[0]
-            )}
-          </li>
+            <i class="fas fa-lg fa-money-bill-wave"></i>${Object.values(
+              currencies ?? ``
+            ).map((c) => " " + c.name + "  `" + c.symbol + "`")}</li>
         </ul>
       </div>`;
   });
 }
+
+// function creatingOption() {}
