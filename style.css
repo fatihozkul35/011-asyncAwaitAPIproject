@@ -1,3 +1,7 @@
 .header {
   height: 35vh;
 }
+
+#exampleDataList {
+  width: 35vw;
+}

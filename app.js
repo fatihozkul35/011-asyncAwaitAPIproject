@@ -1,4 +1,4 @@
-getCountryInfo("Turkey");
+getCountryInfo();
 
 async function getCountryInfo() {
   let url = `https://restcountries.com/v3.1/all`;
@@ -13,13 +13,7 @@ async function getCountryInfo() {
 }
 
 function displayFlag(data) {
-  // cName = document.getElementById("countryName");
-  // cName = document.getElementsByTagName("option");
-
-  // console.log(cName[1].value);
-
-  // console.log(document.getElementsByTagName("select").value);
-
+  cName = document.getElementById("countryName");
   data.forEach((item) => {
     const {
       flags: { png: countryFlag },
@@ -30,15 +24,13 @@ function displayFlag(data) {
       currencies,
     } = item;
 
-    // Creating Options
+    //! Creating Options and display Country
 
-    // cName.innerHTML = `<option value="${countryName}" selected>${countryName}</option>`;
-
-    // Display flags
-
-    const cardOfCountry = document.querySelector(".container");
-
-    cardOfCountry.innerHTML = `<div class="card" style="width: 18rem">
+    cName.innerHTML += `<option value="${countryName}">${countryName}</option>`;
+    cName.addEventListener("click", function () {
+      const cardOfCountry = document.querySelector(".container");
+      if (cName.value == countryName) {
+        cardOfCountry.innerHTML = `<div class="card" style="width: 18rem">
         <img
           src=${countryFlag}
           class="card-img-top"
@@ -54,7 +46,7 @@ function displayFlag(data) {
           </li>
           <li class="list-group-item">
             <i class="fas fa-lg fa-comments"></i> ${Object.values(
-              languages ?? ``
+              languages ?? ""
             )}    </li>
           <li class="list-group-item">
             <i class="fas fa-lg fa-money-bill-wave"></i>${Object.values(
@@ -62,7 +54,7 @@ function displayFlag(data) {
             ).map((c) => " " + c.name + "  `" + c.symbol + "`")}</li>
         </ul>
       </div>`;
+      }
+    });
   });
 }
-
-// function creatingOption() {}
